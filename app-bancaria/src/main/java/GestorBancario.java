@@ -19,4 +19,14 @@ public class GestorBancario {
             System.out.println(usuariosActivos.get(i).getName());
         }
     }
+    public void listarUsuariosConSusBalances(){
+        int i;
+        for(i=0; i<usuariosActivos.size(); i++){
+            System.out.println("Nombre: " + usuariosActivos.get(i).getName() + "\nBalance: $" + usuariosActivos.get(i).getSaldo());
+        }
+    }
+
+    public void depositar(UsuarioCliente user, Double monto){
+        user.setSaldo(user.getSaldo() + monto);
+    }
 }
