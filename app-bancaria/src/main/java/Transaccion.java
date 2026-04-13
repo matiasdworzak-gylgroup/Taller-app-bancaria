@@ -29,4 +29,47 @@ public class Transaccion {
             return true;}
         return false;
     }
+
+    public Double getMonto() {
+        return monto;
+    }
+
+    public void setMonto(Double monto) {
+        this.monto = monto;
+    }
+
+    public UsuarioCliente getDestinatario() {
+        return destinatario;
+    }
+
+    public void setDestinatario(UsuarioCliente destinatario) {
+        this.destinatario = destinatario;
+    }
+
+    public UsuarioCliente getEmisor() {
+        return emisor;
+    }
+
+    public void setEmisor(UsuarioCliente emisor) {
+        this.emisor = emisor;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaccion{" +
+                "id='" + id + '\'' +
+                ", emisor=" + emisor.getName() +
+                ", destinatario=" + destinatario.getName() +
+                ", monto=" + this.getMonto()+
+                ", transaccionExitosa=" + this.getTransaccionExitosa() +
+                '}';
+    }
 }

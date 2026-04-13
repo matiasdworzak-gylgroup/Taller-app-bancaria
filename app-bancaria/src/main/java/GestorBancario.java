@@ -39,8 +39,12 @@ public class GestorBancario {
         if (transaccionPendiente.getTransaccionExitosa()) {
             emisor.restarSaldo(monto);
         } else {
-            System.err.println("La Transaccion fallo por saldo insuficiente");
+            System.out.println("La Transaccion fallo por saldo insuficiente");
         }
         emisor.agregarTransaccion(transaccionPendiente);
+    }
+
+    public ArrayList<Transaccion> obtenerHistorialDeTransaccionesDelUsuario (UsuarioCliente user){
+        return user.getHistorialTransaccion();
     }
 }

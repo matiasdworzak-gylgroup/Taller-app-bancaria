@@ -16,5 +16,9 @@ public class App {
         gestorBancario.transferir(user2, user1, 10000.00);
 
         gestorBancario.listarUsuariosConSusBalances();
+
+        System.out.println("Historial de transacciones del usuario Jose");
+        System.out.println(gestorBancario.obtenerHistorialDeTransaccionesDelUsuario(user2));
+
     }
 }
