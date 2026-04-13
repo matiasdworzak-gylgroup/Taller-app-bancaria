@@ -1,12 +1,23 @@
+import java.util.UUID;
+
 public class Transaccion {
-    private Long id;
+    private String id;
     private UsuarioCliente emisor;
     private UsuarioCliente destinatario;
     private Double monto;
+
+    public boolean getTransaccionExitosa() {
+        return transaccionExitosa;
+    }
+
+    public void setTransaccionExitosa(boolean transaccionExitosa) {
+        this.transaccionExitosa = transaccionExitosa;
+    }
+
     private boolean transaccionExitosa;
 
     public Transaccion(UsuarioCliente emisor, UsuarioCliente destinatario, Double monto) {
-        this.id = id++;
+        this.id = UUID.randomUUID().toString();
         this.emisor = emisor;
         this.destinatario = destinatario;
         this.monto = monto;

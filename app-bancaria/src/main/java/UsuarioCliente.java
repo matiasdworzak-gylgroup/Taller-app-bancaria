@@ -17,12 +17,16 @@ public class UsuarioCliente {
         this.historialTransaccion = new ArrayList<>();
     }
 
+    public void restarSaldo(double monto){
+        this.saldo -= monto;
+    }
     public Long getId(){
         return  id;
     }
     public String getName() {
         return name;
     }
+
 
     public void setName(String name) {
         this.name = name;
@@ -58,5 +62,9 @@ public class UsuarioCliente {
 
     public void setHistorialTransaccion(ArrayList<Transaccion> historialTransaccion) {
         this.historialTransaccion = historialTransaccion;
+    }
+
+    public void agregarTransaccion(Transaccion transaccion){
+        this.historialTransaccion.add(transaccion);
     }
 }

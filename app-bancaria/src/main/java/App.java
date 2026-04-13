@@ -9,6 +9,12 @@ public class App {
         gestorBancario.altaUsuario(user1);
         gestorBancario.depositar(user1, 5000.50);
         gestorBancario.listarUsuariosConSusBalances();
-        
+
+        gestorBancario.transferir(user2, user1, 5000.00);
+        gestorBancario.listarUsuariosConSusBalances();
+
+        gestorBancario.transferir(user2, user1, 10000.00);
+
+        gestorBancario.listarUsuariosConSusBalances();
     }
 }
