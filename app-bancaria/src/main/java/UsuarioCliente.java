@@ -8,7 +8,7 @@ public class UsuarioCliente {
     private Double saldo;
     private ArrayList<Transaccion> historialTransaccion;
 
-    public UsuarioCliente(String name, String direccion, TipoDeCuenta tipoDeCuenta, Double saldo) {
+    public UsuarioCliente(String name, String direccion, TipoDeCuenta tipoDeCuenta) {
         this.id = id++;
         this.name = name;
         this.direccion = direccion;

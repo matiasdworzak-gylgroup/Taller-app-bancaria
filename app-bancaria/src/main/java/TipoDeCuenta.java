@@ -1,5 +1,5 @@
 public enum TipoDeCuenta {
-    Corriente,
-    Ahorro,
-    Sueldo;
+    CORRIENTE,
+    AHORRO,
+    SUELDO;
 }

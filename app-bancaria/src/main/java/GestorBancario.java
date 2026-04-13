@@ -1,3 +1,22 @@
-public class GestorBancario {
+import java.util.ArrayList;
 
+public class GestorBancario {
+    private ArrayList<UsuarioCliente> usuariosActivos;
+    private ArrayList<UsuarioCliente> usuariosDadosDeBaja;
+    public GestorBancario(){
+        usuariosActivos = new ArrayList<>();
+        usuariosDadosDeBaja = new ArrayList<>();
+    }
+    public void  altaUsuario(UsuarioCliente user){
+        if (user.getName()!=null && user.getDireccion()!=null && user.getTipoDeCuenta()!= null){
+            usuariosActivos.add(user);
+        }
+
+    }
+    public void listarUsuarios(){
+        int i;
+        for(i=0; i<usuariosActivos.size(); i++){
+            System.out.println(usuariosActivos.get(i).getName());
+        }
+    }
 }
