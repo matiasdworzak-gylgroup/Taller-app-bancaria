@@ -64,7 +64,7 @@ public class Transaccion {
 
     @Override
     public String toString() {
-        return "Transaccion{" +
+        return "\n {" +
                 "id='" + id + '\'' +
                 ", emisor=" + emisor.getName() +
                 ", destinatario=" + destinatario.getName() +
