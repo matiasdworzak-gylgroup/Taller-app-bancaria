@@ -65,11 +65,11 @@ public class Transaccion {
     @Override
     public String toString() {
         return "\n {" +
-                "id='" + id + '\'' +
-                ", emisor=" + emisor.getName() +
-                ", destinatario=" + destinatario.getName() +
-                ", monto=" + this.getMonto()+
-                ", transaccionExitosa=" + this.getTransaccionExitosa() +
+                "id= '" + id + '\'' +
+                ", emisor= " + emisor.getName() +
+                ", destinatario= " + destinatario.getName() +
+                ", monto= " + this.getMonto()+
+                ", transaccionExitosa= " + this.getTransaccionExitosa() +
                 '}';
     }
 }

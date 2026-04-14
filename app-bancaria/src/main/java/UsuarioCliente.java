@@ -23,9 +23,7 @@ public class UsuarioCliente {
     public void restarSaldo(double monto){
         this.saldo -= monto;
     }
-    public void sumarSaldo(double monto){
-        this.saldo += monto;
-    }
+    public void sumarSaldo(double monto){this.saldo += monto;}
     public Long getId(){
         return  id;
     }
