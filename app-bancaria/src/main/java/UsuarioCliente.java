@@ -5,19 +5,23 @@ public class UsuarioCliente {
     private String name;
     private String direccion;
     private TipoDeCuenta tipoDeCuenta;
+    private String password;
+    private String mail;
     private Double saldo;
     private ArrayList<Transaccion> historialTransaccion;
     private static int contadorId = 1;
     private boolean estaActivado;
 
-    public UsuarioCliente(String name, String direccion, TipoDeCuenta tipoDeCuenta) {
+    public UsuarioCliente(String name, String mail, String password, String direccion, TipoDeCuenta tipoDeCuenta) {
         this.id = contadorId++;
         this.name = name;
+        this.mail = mail;
+        this.password = password;
         this.direccion = direccion;
         this.tipoDeCuenta = tipoDeCuenta;
-        this.saldo = 0.0;
+        this.saldo = 100.0;
         this.historialTransaccion = new ArrayList<>();
-        this.estaActivado = false;
+        this.estaActivado = true;
     }
 
     public void restarSaldo(double monto){
@@ -42,6 +46,14 @@ public class UsuarioCliente {
 
     public boolean getEstaActivado() {
         return estaActivado;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     public void setEstaActivado(boolean estaActivado) {

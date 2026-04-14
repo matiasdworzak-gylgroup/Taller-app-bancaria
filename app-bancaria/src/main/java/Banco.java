@@ -5,11 +5,13 @@ public final class Banco {
     private static Banco instancia;
     private String nombre;
     private final ArrayList<Sucursal> sucursales;
+    private ServiceTransacciones serviceTransacciones;
 
     private Banco() {
         sucursales = new ArrayList<>();
         inicializarSucursales();
         cargarUsuariosEnSucursales();
+        serviceTransacciones = new ServiceTransacciones();
     }
 
     public static Banco getInstancia(){
@@ -27,24 +29,24 @@ public final class Banco {
 
     private void cargarUsuariosEnSucursales(){
 
-        UsuarioCliente user1 = new UsuarioCliente("Jose Marmol", "calle 1", TipoDeCuenta.SUELDO);
-        UsuarioCliente user2 = new UsuarioCliente("Axel Jota", "calle 2", TipoDeCuenta.CORRIENTE);
-        UsuarioCliente user3 = new UsuarioCliente("Sofia Acevedo", "calle 3", TipoDeCuenta.SUELDO);
-        UsuarioCliente user4 = new UsuarioCliente("Tomas Benitez", "calle 4", TipoDeCuenta.AHORRO);
+        UsuarioCliente user1 = new UsuarioCliente("Jose Marmol","jose@gmail.com","pass1234", "calle 1", TipoDeCuenta.SUELDO);
+        UsuarioCliente user2 = new UsuarioCliente("Axel Jota", "axel@gmail.com","pass1234","calle 2", TipoDeCuenta.CORRIENTE);
+        UsuarioCliente user3 = new UsuarioCliente("Sofia Acevedo", "sofia@gmail.com","pass1234","calle 3", TipoDeCuenta.SUELDO);
+        UsuarioCliente user4 = new UsuarioCliente("Tomas Benitez","tomas@gmail.com","pass1234", "calle 4", TipoDeCuenta.AHORRO);
         ArrayList<UsuarioCliente> listaUsuariosCaballito = new ArrayList<>(Arrays.asList(user1, user2, user3, user4));
         sucursales.get(0).setUsuariosActivos(listaUsuariosCaballito);
 
-        UsuarioCliente user5 = new UsuarioCliente("Marcos Sastre", "calle 5", TipoDeCuenta.SUELDO);
-        UsuarioCliente user6 = new UsuarioCliente("Tatiana Rodriguez", "calle 6", TipoDeCuenta.CORRIENTE);
-        UsuarioCliente user7 = new UsuarioCliente("Josue Jose", "calle 7", TipoDeCuenta.AHORRO);
+        UsuarioCliente user5 = new UsuarioCliente("Marcos Sastre","marcos@gmail.com", "pass1234","calle 5", TipoDeCuenta.SUELDO);
+        UsuarioCliente user6 = new UsuarioCliente("Tatiana Rodriguez", "tatiana@gmail.com","pass1234","calle 6", TipoDeCuenta.CORRIENTE);
+        UsuarioCliente user7 = new UsuarioCliente("Josue Jose","josue@gmail.com", "pass1234","calle 7", TipoDeCuenta.AHORRO);
 
         ArrayList<UsuarioCliente> listaUsuariosMataderos = new ArrayList<>(Arrays.asList(user5, user6, user7));
         sucursales.get(1).setUsuariosActivos(listaUsuariosMataderos);
 
-        UsuarioCliente user9 = new UsuarioCliente("Matias Dworzak", "calle 8", TipoDeCuenta.AHORRO);
-        UsuarioCliente user10 = new UsuarioCliente("Lucas Bravo", "calle 9", TipoDeCuenta.AHORRO);
-        UsuarioCliente user11 = new UsuarioCliente("Gustavo Narancio", "calle 10", TipoDeCuenta.SUELDO);
-        UsuarioCliente user12 = new UsuarioCliente("Uri Yurquina", "calle 11", TipoDeCuenta.AHORRO);
+        UsuarioCliente user9 = new UsuarioCliente("Matias Dworzak","matias@gmail.com", "pass1234","calle 8", TipoDeCuenta.AHORRO);
+        UsuarioCliente user10 = new UsuarioCliente("Lucas Bravo", "lucas@gmail.com","pass1234","calle 9", TipoDeCuenta.AHORRO);
+        UsuarioCliente user11 = new UsuarioCliente("Gustavo Narancio", "gustavo@gmail.com","pass1234","calle 10", TipoDeCuenta.SUELDO);
+        UsuarioCliente user12 = new UsuarioCliente("Uri Yurquina", "uri@gmail.com","pass1234","calle 11", TipoDeCuenta.AHORRO);
         ArrayList<UsuarioCliente> listaUsuariosParquePatricios = new ArrayList<>(Arrays.asList(user9, user10, user11, user12));
         sucursales.get(2).setUsuariosActivos(listaUsuariosParquePatricios);
 
@@ -53,7 +55,24 @@ public final class Banco {
     public ArrayList<Sucursal> getSucursales() {
         return sucursales;
     }
+
+    public UsuarioCliente buscarCuentaGlobal(String mail) {
+        for (Sucursal suc : sucursales) {
+            UsuarioCliente user = suc.buscarUsuarioActivoPorMail(mail);
+            if (user != null) return user;
+        }
+        return null;
+    }
+
+    public ServiceTransacciones getServiceTransacciones() {
+        return serviceTransacciones;
+    }
+
+    public void setServiceTransacciones(ServiceTransacciones serviceTransacciones) {
+        this.serviceTransacciones = serviceTransacciones;
+    }
 }
+
 
 //    public void mostrarCuentas() {
 //        System.out.println("-----Detalles de las cuentas del banco-----");

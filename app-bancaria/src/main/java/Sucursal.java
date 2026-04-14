@@ -20,6 +20,12 @@ public class Sucursal {
         return usuariosDadosDeBaja;
     }
 
+    public UsuarioCliente buscarUsuarioActivoPorMail (String mail){
+        for (UsuarioCliente user : usuariosActivos){
+            if (user.getMail().equals(mail)) return user;
+        }
+        return null;
+    }
     public void setUsuariosDadosDeBaja(ArrayList<UsuarioCliente> usuariosDadosDeBaja) {
         this.usuariosDadosDeBaja = usuariosDadosDeBaja;
     }
