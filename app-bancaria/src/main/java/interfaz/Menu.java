@@ -50,7 +50,7 @@ public class Menu {
 
             switch (opcion) {
                 case 1:
-                    registrarCuenta(sucursalElegida);
+                    //registrarCuenta(sucursalElegida);
                     break;
                 case 2:
                     iniciarSesion();
@@ -58,29 +58,29 @@ public class Menu {
         }
     }
 
-    private void registrarCuenta(String nombreSucursal) {
-        Sucursal sucursal = banco.buscarSucursal(nombreSucursal);
-        TipoCuenta tipoCuenta = null;
-        System.out.println("Ingrese su nombre");
-        String nombre = teclado.nextLine();
-        System.out.println("Ingrese su email");
-        String email = teclado.nextLine();
-        System.out.println("Ingrese su pin");
-        int pin = teclado.nextInt();
-        System.out.println("""
-                Indique el tipo de cuenta que le gustaría crear:
-                1) Caja de ahorro
-                2) Cuenta corriente""");
-        int opcionCuenta = teclado.nextInt();
-        if (opcionCuenta == 1) {
-            tipoCuenta = TipoCuenta.CAJA_AHORRO;
-        } else if (opcionCuenta == 2) {
-            tipoCuenta = TipoCuenta.CUENTA_CORRIENTE;
-        } else {
-            System.out.println("Opción inválida");
-        }
-        sucursal.registrarCuentaSucursal(nombre, email, pin, false, tipoCuenta);
-    }
+//    private void registrarCuenta(String nombreSucursal) {
+//        Sucursal sucursal = banco.buscarSucursal(nombreSucursal);
+//        TipoCuenta tipoCuenta = null;
+//        System.out.println("Ingrese su nombre");
+//        String nombre = teclado.nextLine();
+//        System.out.println("Ingrese su email");
+//        String email = teclado.nextLine();
+//        System.out.println("Ingrese su pin");
+//        int pin = teclado.nextInt();
+//        System.out.println("""
+//                Indique el tipo de cuenta que le gustaría crear:
+//                1) Caja de ahorro
+//                2) Cuenta corriente""");
+//        int opcionCuenta = teclado.nextInt();
+//        if (opcionCuenta == 1) {
+//            tipoCuenta = TipoCuenta.CAJA_AHORRO;
+//        } else if (opcionCuenta == 2) {
+//            tipoCuenta = TipoCuenta.CUENTA_CORRIENTE;
+//        } else {
+//            System.out.println("Opción inválida");
+//        }
+//        sucursal.registrarCuentaSucursal(nombre, email, pin, false, tipoCuenta);
+//    }
 
     private void iniciarSesion() {
 
