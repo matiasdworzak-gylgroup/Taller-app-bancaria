@@ -1,3 +1,8 @@
+package entity;
+
+import entity.enums.TipoDeCuenta;
+import service.TransaccionService;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -5,13 +10,12 @@ public final class Banco {
     private static Banco instancia;
     private String nombre;
     private final ArrayList<Sucursal> sucursales;
-    private ServiceTransacciones serviceTransacciones;
+    private TransaccionService transaccionService;
 
     private Banco() {
         sucursales = new ArrayList<>();
         inicializarSucursales();
         cargarUsuariosEnSucursales();
-        serviceTransacciones = new ServiceTransacciones();
     }
 
     public static Banco getInstancia(){
@@ -22,9 +26,9 @@ public final class Banco {
     }
 
     private void inicializarSucursales(){
-        sucursales.add(new Sucursal("Sucursal Caballito", "Av. Rivadavia 5350", 0.0));
-        sucursales.add(new Sucursal("Sucursal Mataderos", "Av. Alberdi 6800", 0.0));
-        sucursales.add(new Sucursal("Sucursal Parque Patricios", "Av. Cordoba 2250", 0.0));
+        sucursales.add(new Sucursal("Entity.Sucursal Caballito", "Av. Rivadavia 5350", 0.0));
+        sucursales.add(new Sucursal("Entity.Sucursal Mataderos", "Av. Alberdi 6800", 0.0));
+        sucursales.add(new Sucursal("Entity.Sucursal Parque Patricios", "Av. Cordoba 2250", 0.0));
     }
 
     private void cargarUsuariosEnSucursales(){
@@ -56,27 +60,21 @@ public final class Banco {
         return sucursales;
     }
 
-    public UsuarioCliente buscarCuentaGlobal(String mail) {
-        for (Sucursal suc : sucursales) {
-            UsuarioCliente user = suc.buscarUsuarioActivoPorMail(mail);
-            if (user != null) return user;
-        }
-        return null;
+
+
+    public TransaccionService getServiceTransacciones() {
+        return transaccionService;
     }
 
-    public ServiceTransacciones getServiceTransacciones() {
-        return serviceTransacciones;
-    }
-
-    public void setServiceTransacciones(ServiceTransacciones serviceTransacciones) {
-        this.serviceTransacciones = serviceTransacciones;
+    public void setServiceTransacciones(TransaccionService transaccionService) {
+        this.transaccionService = transaccionService;
     }
 }
 
 
 //    public void mostrarCuentas() {
 //        System.out.println("-----Detalles de las cuentas del banco-----");
-//        for (Sucursal sucursal : sucursales) {
+//        for (Entity.Sucursal sucursal : sucursales) {
 //            System.out.println("-----Detalles de las cuentas de la sucursal " + sucursal.getNombre() + "-----");
 //            sucursal.mostrarCuentas();
 //        }

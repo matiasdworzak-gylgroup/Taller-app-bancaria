@@ -1,31 +1,29 @@
+package entity;
+
 import java.util.ArrayList;
 
 public class Sucursal {
     private String nombre;
     private String direccion;
     private Double saldoTotal;
+    private Admin administrador;
     private ArrayList<UsuarioCliente> usuariosActivos;
     private ArrayList<UsuarioCliente> usuariosDadosDeBaja;
 
-    public Sucursal(String nombre, String direccion, Double saldoTotal){
+    public Sucursal(String nombre, Admin administrador, String direccion, Double saldoTotal){
         this.nombre = nombre;
         this.direccion = direccion;
         this.saldoTotal = saldoTotal;
         this.usuariosActivos = new ArrayList<>();
         this.usuariosDadosDeBaja = new ArrayList<>();
-
+        this.administrador = administrador;
     }
 
     public ArrayList<UsuarioCliente> getUsuariosDadosDeBaja() {
         return usuariosDadosDeBaja;
     }
 
-    public UsuarioCliente buscarUsuarioActivoPorMail (String mail){
-        for (UsuarioCliente user : usuariosActivos){
-            if (user.getMail().equals(mail)) return user;
-        }
-        return null;
-    }
+
     public void setUsuariosDadosDeBaja(ArrayList<UsuarioCliente> usuariosDadosDeBaja) {
         this.usuariosDadosDeBaja = usuariosDadosDeBaja;
     }

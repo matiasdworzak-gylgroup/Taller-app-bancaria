@@ -1,3 +1,7 @@
+package entity;
+
+import entity.enums.TipoDeCuenta;
+
 import java.util.ArrayList;
 
 public class UsuarioCliente {

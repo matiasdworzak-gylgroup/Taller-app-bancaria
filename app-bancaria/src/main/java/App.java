@@ -1,18 +1,29 @@
+import entity.Banco;
+import entity.UsuarioCliente;
+import interfaz.Menu;
+import repository.SucursalRepository;
+import repository.TransaccionRepository;
+import repository.UsuarioClienteRepository;
+import service.SucursalService;
+import service.TransaccionService;
+import service.UsuarioClienteService;
+
 public class App {
     public static void main(String[] args) {
+
+        Menu menu = init();
+        menu.mostrarMenu();
+    }
+
+    private static Menu init(){
         Banco bancoPatagonia = Banco.getInstancia();
-        Admin adminBancoPatagoniaSucursalCaballito = new Admin(bancoPatagonia.getSucursales().get(0));
-        Admin adminBancoPatagoniaSucursalMataderos = new Admin(bancoPatagonia.getSucursales().get(1));
-        Admin adminBancoPatagoniaSucursalParquePatricios = new Admin(bancoPatagonia.getSucursales().get(2));
+        UsuarioClienteRepository userRepo = new UsuarioClienteRepository();
+        TransaccionRepository transRepo = new TransaccionRepository();
+        SucursalRepository sucRepo = new SucursalRepository();
+        SucursalService sucService = new SucursalService();
+        TransaccionService transService = new TransaccionService(userRepo, transRepo);
+        UsuarioClienteService userService = new UsuarioClienteService(userRepo);
 
-        bancoPatagonia.getServiceTransacciones().transferir(
-                bancoPatagonia.buscarCuentaGlobal("matias@gmail.com"),
-                bancoPatagonia.buscarCuentaGlobal("axel@gmail.com"),
-                50.0);
-        adminBancoPatagoniaSucursalCaballito.listarUsuariosConSusBalances();
-        adminBancoPatagoniaSucursalMataderos.listarUsuariosConSusBalances();
-        adminBancoPatagoniaSucursalParquePatricios.listarUsuariosConSusBalances();
-
-
+        return new Menu(userService, transService, sucService);
     }
 }
