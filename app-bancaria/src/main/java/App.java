@@ -20,7 +20,7 @@ public class App {
         UsuarioClienteRepository userRepo = new UsuarioClienteRepository();
         TransaccionRepository transRepo = new TransaccionRepository();
         SucursalRepository sucRepo = new SucursalRepository();
-        SucursalService sucService = new SucursalService();
+        SucursalService sucService = new SucursalService(sucRepo);
         TransaccionService transService = new TransaccionService(userRepo, transRepo);
         UsuarioClienteService userService = new UsuarioClienteService(userRepo);
 

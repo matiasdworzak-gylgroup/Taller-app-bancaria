@@ -29,9 +29,9 @@ public final class Banco {
         Admin adminCaballito = new Admin("adminCab", "1234");
         Admin adminMataderos = new Admin("adminMat", "1234");
         Admin adminParquePatricios = new Admin("adminPar", "1234");
-        sucursales.add(new Sucursal("Entity.Sucursal Caballito",adminCaballito, "Av. Rivadavia 5350", 0.0));
-        sucursales.add(new Sucursal("Entity.Sucursal Mataderos", adminMataderos,"Av. Alberdi 6800", 0.0));
-        sucursales.add(new Sucursal("Entity.Sucursal Parque Patricios", adminParquePatricios,"Av. Cordoba 2250", 0.0));
+        sucursales.add(new Sucursal("Sucursal Caballito",adminCaballito, "Av. Rivadavia 5350", 0.0));
+        sucursales.add(new Sucursal("Sucursal Mataderos", adminMataderos,"Av. Alberdi 6800", 0.0));
+        sucursales.add(new Sucursal("Sucursal Parque Patricios", adminParquePatricios,"Av. Cordoba 2250", 0.0));
     }
 
     private void cargarUsuariosEnSucursales(){
