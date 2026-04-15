@@ -12,6 +12,7 @@ public class UsuarioCliente {
     private String password;
     private String mail;
     private Double saldo;
+    private boolean isAdmin;
     private ArrayList<Transaccion> historialTransaccion;
     private static int contadorId = 1;
     private boolean estaActivado;
@@ -26,6 +27,7 @@ public class UsuarioCliente {
         this.saldo = 100.0;
         this.historialTransaccion = new ArrayList<>();
         this.estaActivado = true;
+        this.isAdmin = false;
     }
 
     public void restarSaldo(double monto){
@@ -90,6 +92,18 @@ public class UsuarioCliente {
 
     public void setHistorialTransaccion(ArrayList<Transaccion> historialTransaccion) {
         this.historialTransaccion = historialTransaccion;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
+    public boolean isEstaActivado() {
+        return estaActivado;
     }
 
     public void agregarTransaccion(Transaccion transaccion){
