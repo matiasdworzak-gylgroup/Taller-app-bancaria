@@ -3,6 +3,7 @@ package interfaz;
 import entity.Banco;
 import entity.Sucursal;
 import entity.UsuarioCliente;
+import entity.enums.TipoDeCuenta;
 import service.SucursalService;
 import service.TransaccionService;
 import service.UsuarioClienteService;
@@ -44,6 +45,7 @@ public class Menu {
                 correr = false;
             } else if (opcion == 0) {
                 System.out.println("Saliendo...");
+                correr = false;
             } else {
                 System.out.println("Opción inválida.");
             }
@@ -78,11 +80,23 @@ public class Menu {
 
             switch (opcion) {
                 case 1:
-                    // registrarCuenta();
+                    registrarUsuario();
                     break;
+
                 case 2:
                     if (sesionActiva == null) {
-                        //  iniciarSesion();
+                        System.out.println("Para iniciar sesion ingrese su mail y constrasenia");
+                        System.out.println("Mail:");
+                        String mail = teclado.nextLine();
+                        System.out.println("Password:");
+                        String password = teclado.nextLine();
+
+                        if (userService.validarUsuario(mail, password) != null){
+                            sesionActiva = userService.validarUsuario(mail, password);
+                        } else {
+                            System.out.println("El mail o el password no coinciden con un usuario en esta sucursal");
+                            System.out.println("Vas a volver al menu principal");
+                        }
                     } else {
                         System.out.println("\nYa hay una sesión activa\n");
                     }
@@ -186,6 +200,33 @@ public class Menu {
             }
         }
     }
+
+    private void registrarUsuario(){
+        System.out.println("Bienvenido al registro de usuarios.");
+        System.out.println("Introduzca su nombre completo:");
+        String nombre = teclado.nextLine();
+        System.out.println("Introduzca su mail:");
+        String mail = teclado.nextLine();
+        System.out.println("Introduzca su password:");
+        String password = teclado.nextLine();
+        System.out.println("Introduzca su direccion:");
+        String direccion = teclado.nextLine();
+
+        mostrarOpcionesDeCuenta();
+        int opcionTipoDeCuenta;
+        do {
+            System.out.println("Elija tipo de cuenta (1, 2 o 3):");
+            opcionTipoDeCuenta = teclado.nextInt();
+        } while (opcionTipoDeCuenta < 1 || opcionTipoDeCuenta > 3);
+
+        TipoDeCuenta tipo = elegirTipoDeCuenta(opcionTipoDeCuenta);
+
+        if(userService.altaUsuario(nombre,mail,password,direccion, tipo, sucursalActual)){
+            System.out.println("El usuario " + nombre + " a sido dado de alta!");
+        } else{
+            System.out.println("Hubo un error, por favor volver a hacer el registro de usuario");
+        }
+    }
     private <T> void mostrarLista(String titulo, ArrayList<T> lista) {
         System.out.println("=== " + titulo + " ===");
         if (lista.isEmpty()) {
@@ -195,7 +236,29 @@ public class Menu {
                 System.out.println((i + 1) + ") " + lista.get(i));
             }
         }
+        System.out.println("0) Presione 0 para salir.");
         System.out.println("-------------------------");
+    }
+
+    public void mostrarOpcionesDeCuenta() {
+        System.out.println("Seleccione el tipo de cuenta:");
+        TipoDeCuenta[] opciones = TipoDeCuenta.values();
+
+        for (int i = 0; i < opciones.length; i++) {
+            System.out.println((i + 1) + ") " + opciones[i]);
+        }
+    }
+
+    private TipoDeCuenta elegirTipoDeCuenta(int opcion) {
+        return switch (opcion) {
+            case 1 -> TipoDeCuenta.CORRIENTE;
+            case 2 -> TipoDeCuenta.AHORRO;
+            case 3 -> TipoDeCuenta.SUELDO;
+            default -> {
+                System.out.println("Opción no válida, se asignó AHORRO por defecto.");
+                yield TipoDeCuenta.AHORRO;
+            }
+        };
     }
 }
 

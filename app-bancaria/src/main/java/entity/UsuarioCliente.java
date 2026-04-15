@@ -49,7 +49,9 @@ public class UsuarioCliente {
     public String getDireccion() {
         return direccion;
     }
-
+    public String getPassword() {
+        return password;
+    }
     public boolean getEstaActivado() {
         return estaActivado;
     }

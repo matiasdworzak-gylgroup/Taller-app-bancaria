@@ -1,7 +1,9 @@
 package service;
 
+import entity.Sucursal;
 import entity.Transaccion;
 import entity.UsuarioCliente;
+import entity.enums.TipoDeCuenta;
 import repository.TransaccionRepository;
 import repository.UsuarioClienteRepository;
 
@@ -15,14 +17,26 @@ public class UsuarioClienteService {
         this.usuarioRepo = usuarioRepo;
 
     }
-//    public void altaUsuario(UsuarioCliente user) {
-//        if (user.getName() != null && user.getDireccion() != null && user.getTipoDeCuenta() != null) {
-//            sucursal.getUsuariosActivos().add(user);
-//            user.setEstaActivado(true);
-//            System.out.println("El usuario " + user.getName() + " a sido dado de alta!");
-//        }
-//
-//    }
+
+
+    public boolean altaUsuario(String nombre, String mail, String password, String direccion, TipoDeCuenta tipo, Sucursal sucursalActual) {
+        if (nombre != null && mail != null && password != null) {
+        UsuarioCliente user = new UsuarioCliente(nombre, mail, password, direccion, tipo);
+        return usuarioRepo.altaUsuario(user, sucursalActual);
+        }
+        return false;
+    }
+
+    public UsuarioCliente validarUsuario(String mail, String password){
+        UsuarioCliente userBuscado = usuarioRepo.buscarUsuarioActivoPorMail(mail);
+        if(userBuscado != null && userBuscado.getPassword().equals(password)){
+            return userBuscado;
+        }
+        return null;
+    }
+
+
+
 //    public void bajaUsuario(UsuarioCliente user) {
 //        if (user.getEstaActivado()) {
 //            sucursal.getUsuariosActivos().remove(user);
@@ -38,7 +52,8 @@ public class UsuarioClienteService {
            return null;
         }
 
-    }
+
+}
 
 //    public void listarUsuarios() {
 //        int i;

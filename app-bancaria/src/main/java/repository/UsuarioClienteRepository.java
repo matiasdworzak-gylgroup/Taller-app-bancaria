@@ -23,6 +23,15 @@ public class UsuarioClienteRepository {
         if (user == null) return false;
         return true;}
 
+    public boolean altaUsuario(UsuarioCliente user, Sucursal suc) {
+        if (suc == null || user == null) return false;
+
+        suc.getUsuariosActivos().add(user);
+        user.setEstaActivado(true);
+
+        return true;
+    }
+
     public boolean existe(UsuarioCliente user) {
         if (user == null) return false;
 
