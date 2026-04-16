@@ -3,6 +3,7 @@ package interfaz;
 import entity.Admin;
 import entity.Sucursal;
 import entity.Usuario;
+import entity.UsuarioCliente;
 import entity.enums.TipoDeCuenta;
 import service.SucursalService;
 import service.TransaccionService;
@@ -179,23 +180,90 @@ public class Menu {
         }
     }
 
-    private void menuCliente(){
+    private void menuCliente() {
         System.out.println("""
-                    Ingrese el número que corresponda con la acción que desee realizar:
-                    1) Depositar dinero
-                    2) Retirar dinero
-                    3) Realizar una transferencia
-                    4) Mostrar datos de la cuenta
-                    5) Eliminar cuenta
-                    6) Cerrar sesión
-                    7) Salir de la sucursal""");}
+            --- MENÚ CLIENTE (%s) ---
+            1) Depositar dinero
+            2) Retirar dinero
+            3) Realizar una transferencia
+            4) Mostrar datos de la cuenta
+            5) Eliminar mi cuenta
+            6) Cerrar sesión
+            7) Salir de la sucursal
+            """);
+
+        int op = teclado.nextInt();
+        teclado.nextLine(); // Limpiar buffer
+
+        switch (op) {
+            case 1 -> procesarDeposito();
+            case 2 -> procesarRetiro();
+            case 3 -> procesarTransferencia();
+            case 4 -> System.out.println(sesionActiva); // Aprovechamos el toString
+            case 5 -> solicitarBaja();
+            case 6 -> {
+                sesionActiva = null;
+                System.out.println("Sesión cerrada.");
+            }
+            case 7 -> {
+                sesionActiva = null;
+                sucursalActual = null;
+                System.out.println("Saliendo de la sucursal...");
+            }
+            default -> System.out.println("Opción no válida.");
+        }
+    }
+
+    private void solicitarBaja() {
+    }
+
+    private void procesarTransferencia() {
+        System.out.println("Para hacer una transferencia escriba el mail del usuario al que desea transferir");
+        System.out.println("Mail: ");
+        String mail = teclado.nextLine().toLowerCase();
+        System.out.println("Ingrese el monto que desea transferir: ");
+        double montoATransferir = teclado.nextDouble();
+        UsuarioCliente emisor = userService.buscarUsuarioClientePorMail(sesionActiva.getMail());
+        UsuarioCliente destinatario = userService.buscarUsuarioClientePorMail(mail);
+       if(destinatario != null){
+           if(transService.transferir(emisor, destinatario, montoATransferir)){
+               System.out.println("El usuario " + emisor.getName() + " transfirio $" + montoATransferir + " al usuario " + destinatario.getName());
+               System.out.println("-----------------------------");
+           }else{
+               System.out.println("La Transaccion de " + emisor.getName() +"a " + destinatario.getName() + " fallo por saldo insuficiente");
+               System.out.println("-----------------------------");
+           }
+
+       } else{
+           System.out.println("No se encuentra al destinatario");
+           System.out.println("-----------------------------");
+       }
+
+    }
+
+    private void procesarRetiro() {
+    }
+
+    private void procesarDeposito() {
+        System.out.println("Ingrese cuanto desea depositar a su cuenta.");
+        double montoADepositar = teclado.nextDouble();
+        if(transService.depositar((UsuarioCliente) sesionActiva, montoADepositar)){
+            System.out.println("Depositaste $" + montoADepositar + " con exito.");
+            System.out.println("Tu nuevo saldo en al cuente es de $" + ((UsuarioCliente) sesionActiva).getSaldo());
+        }else{
+            System.out.println("Algo salio mal, vuelva a intentarlo mas tarde.");
+        }
+
+    }
+
     private void menuAdmin(){
         System.out.println("""
                     Ingrese el número que corresponda con la acción que desee realizar:
-                    1) Mostrar datos de esta sucursal
-                    2) Mostrar datos de otra sucursal
-                    3) Mostrar datos del banco
-                    4) Crear sucursal
+                    1) Generar balance de esta sucursal
+                    2) Dar de alta una cuenta
+                    3) Dar de baja una cuenta
+                    3) Cerrar sesion.
+                    4) Salir de la sucursal.
                      ""\");""");}
 }
 

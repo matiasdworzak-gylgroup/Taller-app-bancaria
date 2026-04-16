@@ -12,8 +12,12 @@ public class UsuarioCliente extends Usuario{
     private ArrayList<Transaccion> historialTransaccion;
     private boolean estaActivado;
 
+
+    // 101 500 1234
+
     public UsuarioCliente(String name, String mail, String password, String direccion, TipoDeCuenta tipoDeCuenta) {
         super(mail, password);
+        this.name = name;
         this.direccion = direccion;
         this.tipoDeCuenta = tipoDeCuenta;
         this.saldo = 100.0;

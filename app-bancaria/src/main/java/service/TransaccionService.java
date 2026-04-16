@@ -15,30 +15,25 @@ public class TransaccionService {
         this.transaccionRepo = transaccionRepo;
     }
 
-    public void transferir(UsuarioCliente emisor, UsuarioCliente destinatario, Double monto) {
-//        if(verificadorDeUsuarioActivos(emisor)&& verificadorDeUsuarioActivos(destinatario)){
+    public boolean transferir(UsuarioCliente emisor, UsuarioCliente destinatario, Double monto) {
             Transaccion transaccionPendiente = new Transaccion(emisor, destinatario, monto);
-            if (transaccionPendiente.getTransaccionExitosa()) {
+            if (verificarSaldoParaRealizarTransaccionExitosa(emisor, monto)) {
                 emisor.restarSaldo(monto);
                 destinatario.sumarSaldo(monto);
-                System.out.println("El usuario " + emisor.getName() + " transfirio $" + monto + " al usuario " + destinatario.getName());
-                System.out.println("-----------------------------");
-            } else {
-                System.out.println("La Transaccion de " + emisor.getName() +"a " + destinatario.getName() + " fallo por saldo insuficiente");
-                System.out.println("-----------------------------");
+                usuarioRepo.agregarTransaccion(emisor, transaccionPendiente);
+                usuarioRepo.agregarTransaccion(destinatario, transaccionPendiente);
+
+                return  true;
+                   } else {
+                return false;
             }
-            usuarioRepo.agregarTransaccion(emisor, transaccionPendiente);
-            usuarioRepo.agregarTransaccion(destinatario, transaccionPendiente);
+
         }
 
-//    public boolean verificadorDeUsuarioActivos(UsuarioCliente user){
-//        if (!user.getEstaActivado()){
-//            System.out.println("La Transaccion no puede realizarse porque el usuario " + user.getName() + " tiene la cuenta desactivada.");
-//            return false;
-//        }
-//        return true;
-//    }
 
+    public boolean verificarSaldoParaRealizarTransaccionExitosa (UsuarioCliente emisor, double monto){
+        return monto > 0 && emisor.getSaldo() >= monto;
+    }
     public boolean depositar(UsuarioCliente user, Double monto) {
         if (user == null || monto == null || monto <= 0) {
             return false;

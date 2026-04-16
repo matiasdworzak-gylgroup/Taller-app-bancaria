@@ -24,6 +24,10 @@ public class UsuarioClienteService {
         return false;
     }
 
+    public UsuarioCliente buscarUsuarioClientePorMail(String mail){
+
+        return (UsuarioCliente) usuarioRepo.buscarUsuarioActivoPorMail( mail);
+    }
     public Usuario validarUsuario(String mail, String password){
         Usuario userBuscado = usuarioRepo.buscarUsuarioActivoPorMail(mail);
         if(userBuscado != null && userBuscado.getPassword().equals(password)){
