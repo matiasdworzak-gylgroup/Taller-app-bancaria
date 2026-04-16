@@ -1,9 +1,6 @@
 package service;
 
-import entity.Sucursal;
-import entity.Transaccion;
-import entity.Usuario;
-import entity.UsuarioCliente;
+import entity.*;
 import entity.enums.TipoDeCuenta;
 import repository.UsuarioRepository;
 
@@ -35,7 +32,14 @@ public class UsuarioClienteService {
         return null;
     }
 
+    public Admin validarAdmin(String mail, String password, Sucursal suc){
+        Admin admin = suc.getAdministrador();
 
+        if (admin != null && admin.getMail().equals(mail) && admin.getPassword().equals(password)){
+            return admin;
+        }
+        return null;
+    }
 
 //    public void bajaUsuario(UsuarioCliente user) {
 //        if (user.getEstaActivado()) {

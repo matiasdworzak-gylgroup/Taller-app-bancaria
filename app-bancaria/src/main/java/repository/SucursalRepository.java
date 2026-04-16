@@ -12,4 +12,5 @@ public class SucursalRepository {
     public ArrayList<Sucursal> getTodasLasSucursales(){
         return Bancodb.getSucursales();
     }
+
 }

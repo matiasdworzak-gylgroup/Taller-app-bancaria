@@ -1,5 +1,6 @@
 package interfaz;
 
+import entity.Admin;
 import entity.Sucursal;
 import entity.Usuario;
 import entity.enums.TipoDeCuenta;
@@ -53,7 +54,7 @@ public class Menu {
             if (sesionActiva == null) {
                 // 1. Nadie logueado: Registro o Login
                 menuInvitado();
-            } else if (sesionActiva.isAdmin()) {
+            } else if (sesionActiva instanceof Admin) {
                 // 2. Es Admin: Menú con superpoderes
                 menuAdmin();
             } else {
@@ -63,154 +64,7 @@ public class Menu {
         }
 
 
-        while (sucursalActual != null) {
-            System.out.println("""
-                    Ingrese el número que corresponda con la acción que desee realizar:
-                    1) Registrar cuenta
-                    2) Iniciar sesión
-                    3) Depositar dinero
-                    4) Retirar dinero
-                    5) Realizar una transferencia
-                    6) Mostrar datos de la cuenta
-                    7) Eliminar cuenta
-                    8) Cerrar sesión
-                    9) Salir de la sucursal
-                    """);
-            if (sesionActiva != null && sesionActiva.isAdmin()) {
-                System.out.println("""
-                        Acciones de administrador:
-                        10) Mostrar datos de esta sucursal
-                        11) Mostrar datos de otra sucursal
-                        12) Mostrar datos del banco
-                        13) Crear sucursal
-                        14) Eliminar una cuenta
-                        """);
-            }
 
-            int opcion = teclado.nextInt();
-            teclado.nextLine();
-
-            switch (opcion) {
-                case 1:
-                    registrarUsuario();
-                    break;
-
-                case 2:
-                    if (sesionActiva == null) {
-                        System.out.println("Para iniciar sesion ingrese su mail y constrasenia");
-                        System.out.println("Mail:");
-                        String mail = teclado.nextLine();
-                        System.out.println("Password:");
-                        String password = teclado.nextLine();
-
-                        if (userService.validarUsuario(mail, password) != null){
-                            sesionActiva = userService.validarUsuario(mail, password);
-                        } else {
-                            System.out.println("El mail o el password no coinciden con un usuario en esta sucursal");
-                            System.out.println("Vas a volver al menu principal");
-                        }
-                    } else {
-                        System.out.println("\nYa hay una sesión activa\n");
-                    }
-                    break;
-                case 3:
-                    if (sesionActiva != null) {
-                        // procesarDeposito();
-                    } else {
-                        System.out.println("\nNecesita iniciar sesión para realizar esta acción\n");
-                    }
-                    break;
-                case 4:
-                    if (sesionActiva != null) {
-                        // procesarRetiro();
-                    } else {
-                        System.out.println("\nNecesita iniciar sesión para realizar esta acción\n");
-                    }
-                    break;
-                case 5:
-                    if (sesionActiva != null) {
-                        //  procesarTransferencia();
-                    } else {
-                        System.out.println("\nNecesita iniciar sesión para realizar esta acción\n");
-                    }
-                    break;
-                case 6:
-                    if (sesionActiva != null) {
-                        System.out.println(sesionActiva);
-                        ;
-                    } else {
-                        System.out.println("\nNecesita iniciar sesión para realizar esta acción\n");
-                    }
-                    break;
-                case 7:
-                    if (sesionActiva != null) {
-                        //  procesarEliminacion();
-                    } else {
-                        System.out.println("\nNecesita iniciar sesión para realizar esta acción\n");
-                    }
-                    break;
-                case 8:
-                    if (sesionActiva != null) {
-                        sesionActiva = null;
-                        System.out.println("\nSesión cerrada con éxito\n");
-                    } else {
-                        System.out.println("\nNo hay una sesión activa\n");
-                    }
-                    break;
-                case 9:
-                    // sucursal = null;
-                    sesionActiva = null;
-                    break;
-                case 10:
-                    if (sesionActiva == null || !sesionActiva.isAdmin()) {
-                        System.out.println("\nOpción inválida\n");
-                        break;
-                    } else {
-                        //  sucursal.mostrarCuentas();
-                    }
-                    break;
-                case 11:
-                    if (sesionActiva == null || !sesionActiva.isAdmin()) {
-                        System.out.println("\nOpción inválida\n");
-                        break;
-                    } else {
-                        System.out.println("\nIngrese el nombre de la sucursal\n");
-                        // banco.mostrarSucursales();
-                        String sucursalBuscada = teclado.nextLine();
-                        //Sucursal otraSucursal = banco.buscarSucursal(sucursalBuscada);
-                        // otraSucursal.mostrarCuentas();
-                    }
-                    break;
-                case 12:
-                    if (sesionActiva == null || !sesionActiva.isAdmin()) {
-                        System.out.println("\nOpción inválida\n");
-                        break;
-                    } else {
-                        //   banco.mostrarCuentas();
-                    }
-                    break;
-                case 13:
-                    if (sesionActiva == null || !sesionActiva.isAdmin()) {
-                        System.out.println("\nOpción inválida\n");
-                        break;
-                    } else {
-                        System.out.println("Ingrese el nombre de la nueva sucursal");
-                        String nombreNuevaSucursal = teclado.nextLine();
-                        //  banco.crearSucursal(nombreNuevaSucursal);
-                    }
-                    break;
-                case 14:
-                    if (sesionActiva == null || !sesionActiva.isAdmin()) {
-                        System.out.println("\nOpción inválida\n");
-                        break;
-                    } else {
-                        //   procesarEliminacionAdmin();
-                    }
-                    break;
-                default:
-                    System.out.println("\nOpción inválida\n");
-            }
-        }
     }
 
     private void registrarUsuario(){
@@ -288,7 +142,8 @@ public class Menu {
 
             switch (op) {
                 case 1 -> registrarUsuario();
-                case 2, 3 -> iniciarSesion(); // El login puede ser el mismo, el objeto dirá qué es
+                case 2 -> iniciarSesion();
+                case 3 -> iniciarSesionAdmin();
                 case 0 -> sucursalActual = null;
                 default -> System.out.println("Opción inválida.");
             }
@@ -310,16 +165,16 @@ public class Menu {
         }
     }
     private void iniciarSesionAdmin() {
-        System.out.println("Para iniciar sesion su user y password");
+        System.out.println("Para iniciar sesion escriba su user y password");
         System.out.println("User:");
         String mail = teclado.nextLine();
         System.out.println("Password:");
         String password = teclado.nextLine();
 
-        if (userService.validarUsuario(mail, password) != null){
-            sesionActiva = userService.validarUsuario(mail, password);
+        if (userService.validarAdmin(mail, password, sucursalActual) != null){
+            sesionActiva = userService.validarAdmin(mail, password, sucursalActual);
         } else {
-            System.out.println("El mail o el password no coinciden con un usuario en esta sucursal");
+            System.out.println("El mail o el password no coinciden con un admin en esta sucursal");
             System.out.println("Vas a volver al menu principal");
         }
     }

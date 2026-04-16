@@ -2,30 +2,13 @@ package entity;
 
 import java.util.ArrayList;
 
-public class Admin {
-    private String username;
-    private String password;
+public class Admin  extends Usuario{
 
-    public Admin(String username, String password ) {
-        this.username = username;
-        this.password = password;
+
+    public Admin(String mail, String password) {
+        super(mail, password);
 
     }
 
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }
