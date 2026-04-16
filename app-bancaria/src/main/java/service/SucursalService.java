@@ -2,7 +2,6 @@ package service;
 
 import entity.Sucursal;
 import repository.SucursalRepository;
-import repository.UsuarioClienteRepository;
 
 import java.util.ArrayList;
 

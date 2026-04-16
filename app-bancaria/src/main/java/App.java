@@ -1,9 +1,8 @@
 import entity.Banco;
-import entity.UsuarioCliente;
 import interfaz.Menu;
 import repository.SucursalRepository;
 import repository.TransaccionRepository;
-import repository.UsuarioClienteRepository;
+import repository.UsuarioRepository;
 import service.SucursalService;
 import service.TransaccionService;
 import service.UsuarioClienteService;
@@ -17,7 +16,7 @@ public class App {
 
     private static Menu init(){
         Banco bancoPatagonia = Banco.getInstancia();
-        UsuarioClienteRepository userRepo = new UsuarioClienteRepository();
+        UsuarioRepository userRepo = new UsuarioRepository();
         TransaccionRepository transRepo = new TransaccionRepository();
         SucursalRepository sucRepo = new SucursalRepository();
         SucursalService sucService = new SucursalService(sucRepo);

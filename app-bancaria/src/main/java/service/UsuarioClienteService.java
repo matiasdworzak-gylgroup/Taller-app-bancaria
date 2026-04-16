@@ -2,18 +2,18 @@ package service;
 
 import entity.Sucursal;
 import entity.Transaccion;
+import entity.Usuario;
 import entity.UsuarioCliente;
 import entity.enums.TipoDeCuenta;
-import repository.TransaccionRepository;
-import repository.UsuarioClienteRepository;
+import repository.UsuarioRepository;
 
 import java.util.ArrayList;
 
 public class UsuarioClienteService {
 
-    private UsuarioClienteRepository usuarioRepo;
+    private UsuarioRepository usuarioRepo;
 
-    public UsuarioClienteService(UsuarioClienteRepository usuarioRepo){
+    public UsuarioClienteService(UsuarioRepository usuarioRepo){
         this.usuarioRepo = usuarioRepo;
 
     }
@@ -21,14 +21,14 @@ public class UsuarioClienteService {
 
     public boolean altaUsuario(String nombre, String mail, String password, String direccion, TipoDeCuenta tipo, Sucursal sucursalActual) {
         if (nombre != null && mail != null && password != null) {
-        UsuarioCliente user = new UsuarioCliente(nombre, mail, password, direccion, tipo);
-        return usuarioRepo.altaUsuario(user, sucursalActual);
+        Usuario user = new UsuarioCliente(nombre, mail, password, direccion, tipo);
+        return usuarioRepo.altaUsuarioCliente((UsuarioCliente) user, sucursalActual);
         }
         return false;
     }
 
-    public UsuarioCliente validarUsuario(String mail, String password){
-        UsuarioCliente userBuscado = usuarioRepo.buscarUsuarioActivoPorMail(mail);
+    public Usuario validarUsuario(String mail, String password){
+        Usuario userBuscado = usuarioRepo.buscarUsuarioActivoPorMail(mail);
         if(userBuscado != null && userBuscado.getPassword().equals(password)){
             return userBuscado;
         }
@@ -46,7 +46,7 @@ public class UsuarioClienteService {
 //        }
 
         public ArrayList<Transaccion> obtenerHistorial(String mail) {
-            UsuarioCliente user = usuarioRepo.buscarUsuarioActivoPorMail(mail);
+            UsuarioCliente user = (UsuarioCliente) usuarioRepo.buscarUsuarioActivoPorMail(mail);
            if(usuarioRepo.existe(user)){
                return user.getHistorialTransaccion();}
            return null;

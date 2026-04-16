@@ -4,43 +4,32 @@ import entity.enums.TipoDeCuenta;
 
 import java.util.ArrayList;
 
-public class UsuarioCliente {
-    private long id;
+public class UsuarioCliente extends Usuario{
     private String name;
     private String direccion;
     private TipoDeCuenta tipoDeCuenta;
-    private String password;
-    private String mail;
     private Double saldo;
-    private boolean isAdmin;
     private ArrayList<Transaccion> historialTransaccion;
-    private static int contadorId = 1;
     private boolean estaActivado;
 
     public UsuarioCliente(String name, String mail, String password, String direccion, TipoDeCuenta tipoDeCuenta) {
-        this.id = contadorId++;
-        this.name = name;
-        this.mail = mail;
-        this.password = password;
+        super(mail, password);
         this.direccion = direccion;
         this.tipoDeCuenta = tipoDeCuenta;
         this.saldo = 100.0;
         this.historialTransaccion = new ArrayList<>();
         this.estaActivado = true;
-        this.isAdmin = false;
     }
+
 
     public void restarSaldo(double monto){
         this.saldo -= monto;
     }
     public void sumarSaldo(double monto){this.saldo += monto;}
-    public Long getId(){
-        return  id;
-    }
+
     public String getName() {
         return name;
     }
-
 
     public void setName(String name) {
         this.name = name;
@@ -48,24 +37,6 @@ public class UsuarioCliente {
 
     public String getDireccion() {
         return direccion;
-    }
-    public String getPassword() {
-        return password;
-    }
-    public boolean getEstaActivado() {
-        return estaActivado;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public void setEstaActivado(boolean estaActivado) {
-        this.estaActivado = estaActivado;
     }
 
     public void setDireccion(String direccion) {
@@ -96,19 +67,11 @@ public class UsuarioCliente {
         this.historialTransaccion = historialTransaccion;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
-    }
-
     public boolean isEstaActivado() {
         return estaActivado;
     }
 
-    public void agregarTransaccion(Transaccion transaccion){
-        this.historialTransaccion.add(transaccion);
+    public void setEstaActivado(boolean estaActivado) {
+        this.estaActivado = estaActivado;
     }
 }

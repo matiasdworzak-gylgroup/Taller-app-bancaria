@@ -1,29 +1,26 @@
 package repository;
 
-import entity.Banco;
-import entity.Sucursal;
-import entity.Transaccion;
-import entity.UsuarioCliente;
+import entity.*;
 
 import java.util.ArrayList;
 
-public class UsuarioClienteRepository {
+public class UsuarioRepository {
     private Banco bandoDb = Banco.getInstancia();
 
-    public UsuarioCliente buscarUsuarioActivoPorMail(String mail) {
+    public Usuario buscarUsuarioActivoPorMail(String mail) {
         for (Sucursal suc : bandoDb.getSucursales()) {
-            for (UsuarioCliente user : suc.getUsuariosActivos()) {
+            for (Usuario user : suc.getUsuariosActivos()) {
                 if (user.getMail().equals(mail)) return user;
             }
         }
         return null;
     }
 
-    public boolean save(UsuarioCliente user) {
+    public boolean save(Usuario user) {
         if (user == null) return false;
         return true;}
 
-    public boolean altaUsuario(UsuarioCliente user, Sucursal suc) {
+    public boolean altaUsuarioCliente(UsuarioCliente user, Sucursal suc) {
         if (suc == null || user == null) return false;
 
         suc.getUsuariosActivos().add(user);
@@ -32,7 +29,7 @@ public class UsuarioClienteRepository {
         return true;
     }
 
-    public boolean existe(UsuarioCliente user) {
+    public boolean existe(Usuario user) {
         if (user == null) return false;
 
         return buscarUsuarioActivoPorMail(user.getMail()) != null;
@@ -42,5 +39,10 @@ public class UsuarioClienteRepository {
 //        System.out.println("-----------------------------");
 //        System.out.println("Historial de transacciones del usuario " + user.getName() + ": \n");
         return user.getHistorialTransaccion();
+    }
+
+    public void agregarTransaccion(UsuarioCliente user, Transaccion transaccion) {
+        user.getHistorialTransaccion().add(transaccion);
+
     }
 }

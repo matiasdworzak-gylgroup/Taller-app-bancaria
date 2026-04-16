@@ -1,8 +1,7 @@
 package interfaz;
 
-import entity.Banco;
 import entity.Sucursal;
-import entity.UsuarioCliente;
+import entity.Usuario;
 import entity.enums.TipoDeCuenta;
 import service.SucursalService;
 import service.TransaccionService;
@@ -18,7 +17,7 @@ public class Menu {
     private TransaccionService transService;
     private SucursalService sucService;
     private Sucursal sucursalActual;
-    private UsuarioCliente sesionActiva;
+    private Usuario sesionActiva;
 
     public Menu(UsuarioClienteService userService, TransaccionService transService, SucursalService sucService) {
 
@@ -50,6 +49,19 @@ public class Menu {
                 System.out.println("Opción inválida.");
             }
         }
+        while (sucursalActual != null) {
+            if (sesionActiva == null) {
+                // 1. Nadie logueado: Registro o Login
+                menuInvitado();
+            } else if (sesionActiva.isAdmin()) {
+                // 2. Es Admin: Menú con superpoderes
+                menuAdmin();
+            } else {
+                // 3. Es Cliente: Menú de operaciones bancarias
+                menuCliente();
+            }
+        }
+
 
         while (sucursalActual != null) {
             System.out.println("""
@@ -66,7 +78,7 @@ public class Menu {
                     """);
             if (sesionActiva != null && sesionActiva.isAdmin()) {
                 System.out.println("""
-                        Acciones de administrador:1
+                        Acciones de administrador:
                         10) Mostrar datos de esta sucursal
                         11) Mostrar datos de otra sucursal
                         12) Mostrar datos del banco
@@ -260,6 +272,76 @@ public class Menu {
             }
         };
     }
+
+
+        private void menuInvitado() {
+            System.out.println("""
+        --- SUCURSAL: """ + sucursalActual.getNombre() + """
+        
+         1) Registrar usuario
+        2) Iniciar sesión Usuario
+        3) Iniciar sesión Admin
+        0) Salir de la sucursal
+        """);
+            int op = teclado.nextInt();
+            teclado.nextLine();
+
+            switch (op) {
+                case 1 -> registrarUsuario();
+                case 2, 3 -> iniciarSesion(); // El login puede ser el mismo, el objeto dirá qué es
+                case 0 -> sucursalActual = null;
+                default -> System.out.println("Opción inválida.");
+            }
+        }
+
+
+    private void iniciarSesion() {
+        System.out.println("Para iniciar sesion ingrese su mail y constrasenia");
+        System.out.println("Mail:");
+        String mail = teclado.nextLine();
+        System.out.println("Password:");
+        String password = teclado.nextLine();
+
+        if (userService.validarUsuario(mail, password) != null){
+            sesionActiva = userService.validarUsuario(mail, password);
+        } else {
+            System.out.println("El mail o el password no coinciden con un usuario en esta sucursal");
+            System.out.println("Vas a volver al menu principal");
+        }
+    }
+    private void iniciarSesionAdmin() {
+        System.out.println("Para iniciar sesion su user y password");
+        System.out.println("User:");
+        String mail = teclado.nextLine();
+        System.out.println("Password:");
+        String password = teclado.nextLine();
+
+        if (userService.validarUsuario(mail, password) != null){
+            sesionActiva = userService.validarUsuario(mail, password);
+        } else {
+            System.out.println("El mail o el password no coinciden con un usuario en esta sucursal");
+            System.out.println("Vas a volver al menu principal");
+        }
+    }
+
+    private void menuCliente(){
+        System.out.println("""
+                    Ingrese el número que corresponda con la acción que desee realizar:
+                    1) Depositar dinero
+                    2) Retirar dinero
+                    3) Realizar una transferencia
+                    4) Mostrar datos de la cuenta
+                    5) Eliminar cuenta
+                    6) Cerrar sesión
+                    7) Salir de la sucursal""");}
+    private void menuAdmin(){
+        System.out.println("""
+                    Ingrese el número que corresponda con la acción que desee realizar:
+                    1) Mostrar datos de esta sucursal
+                    2) Mostrar datos de otra sucursal
+                    3) Mostrar datos del banco
+                    4) Crear sucursal
+                     ""\");""");}
 }
 
 

@@ -4,8 +4,8 @@ import java.util.UUID;
 
 public class Transaccion {
     private String id;
-    private UsuarioCliente emisor;
-    private UsuarioCliente destinatario;
+    private Usuario emisor;
+    private Usuario destinatario;
     private Double monto;
 
     public boolean getTransaccionExitosa() {
@@ -18,19 +18,19 @@ public class Transaccion {
 
     private boolean transaccionExitosa;
 
-    public Transaccion(UsuarioCliente emisor, UsuarioCliente destinatario, Double monto) {
+    public Transaccion(Usuario emisor, Usuario destinatario, Double monto) {
         this.id = UUID.randomUUID().toString();
         this.emisor = emisor;
         this.destinatario = destinatario;
         this.monto = monto;
-        this.transaccionExitosa = tieneSaldoParaRealizarLaOperacion(emisor, monto);
+      //  this.transaccionExitosa = tieneSaldoParaRealizarLaOperacion(emisor, monto);
     }
 
-    public boolean tieneSaldoParaRealizarLaOperacion(UsuarioCliente cliente1, Double monto){
-        if(cliente1.getSaldo()>=monto) {
-            return true;}
-        return false;
-    }
+//    public boolean tieneSaldoParaRealizarLaOperacion(Usuario cliente1, Double monto){
+//        if(cliente1.getSaldo()>=monto) {
+//            return true;}
+//        return false;
+//    }
 
     public Double getMonto() {
         return monto;
@@ -40,19 +40,19 @@ public class Transaccion {
         this.monto = monto;
     }
 
-    public UsuarioCliente getDestinatario() {
+    public Usuario getDestinatario() {
         return destinatario;
     }
 
-    public void setDestinatario(UsuarioCliente destinatario) {
+    public void setDestinatario(Usuario destinatario) {
         this.destinatario = destinatario;
     }
 
-    public UsuarioCliente getEmisor() {
+    public Usuario getEmisor() {
         return emisor;
     }
 
-    public void setEmisor(UsuarioCliente emisor) {
+    public void setEmisor(Usuario emisor) {
         this.emisor = emisor;
     }
 
@@ -68,8 +68,8 @@ public class Transaccion {
     public String toString() {
         return "\n {" +
                 "id= '" + id + '\'' +
-                ", emisor= " + emisor.getName() +
-                ", destinatario= " + destinatario.getName() +
+//                ", emisor= " + emisor.getName() +
+//                ", destinatario= " + destinatario.getName() +
                 ", monto= " + this.getMonto()+
                 ", transaccionExitosa= " + this.getTransaccionExitosa() +
                 '}';

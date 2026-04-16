@@ -36,6 +36,10 @@ public class Sucursal {
         this.usuariosActivos = usuariosActivos;
     }
 
+    public Admin getAdministrador() {
+        return administrador;
+    }
+
     public Double getSaldoTotal() {
         return saldoTotal;
     }
